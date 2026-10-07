@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hobbit House — залишити відгук</title>
+<meta name="description" content="Поділіться досвідом про укриття Hobbit House. Ваш відгук допомагає іншим керівникам прийняти зважене рішення.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#101213">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap&subset=cyrillic,latin" rel="stylesheet">
+
+<style>
+  :root{
+    --yellow:#FCDE00;--steel:#84969A;--ink-900:#101213;
+    --concrete-50:#F6F5F2;--concrete-100:#EFEDE8;--concrete-300:#CFCBC1;
+    --certified:#2F7D4F;
+    --bg:var(--concrete-50);--surface:#FFFFFF;--surface-2:var(--concrete-100);
+    --border:var(--concrete-300);--text:var(--ink-900);--text-dim:#5C6468;
+    --shadow:0 1px 2px rgba(16,18,19,.06),0 8px 24px rgba(16,18,19,.07);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:var(--ink-900);--surface:#1B1E20;--surface-2:#23272A;--border:#2E3337;
+    --text:#F3F2EF;--text-dim:#9AA3A7;--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }}
+  :root[data-theme="dark"]{
+    --bg:var(--ink-900);--surface:#1B1E20;--surface-2:#23272A;--border:#2E3337;
+    --text:#F3F2EF;--text-dim:#9AA3A7;--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--text);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh}
+  .wrap{max-width:560px;margin:0 auto;padding:28px 16px calc(40px + env(safe-area-inset-bottom))}
+
+  .back{display:inline-flex;align-items:center;gap:7px;color:var(--text-dim);
+    text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:11px;
+    letter-spacing:.06em;text-transform:uppercase;margin-bottom:22px}
+  .back:hover{color:var(--text)}
+
+  h1{font-family:"Oswald",sans-serif;font-weight:600;text-transform:uppercase;
+    letter-spacing:.01em;font-size:clamp(22px,6vw,28px);line-height:1.1;margin:0 0 8px}
+  h1 b{border-bottom:3px solid var(--yellow);padding-bottom:1px}
+  .sub{color:var(--text-dim);font-size:14px;margin:0 0 24px}
+
+  form{display:flex;flex-direction:column;gap:16px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  label{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--text-dim)}
+  label .req{color:var(--yellow)}
+  input[type=text],input[type=email],textarea{
+    font-family:inherit;font-size:15px;color:var(--text);
+    background:var(--surface);border:1px solid var(--border);border-radius:11px;
+    padding:13px 14px;width:100%;box-shadow:var(--shadow);transition:border-color .14s ease}
+  input:focus,textarea:focus{outline:none;border-color:var(--steel)}
+  textarea{resize:vertical;min-height:120px}
+  input::placeholder,textarea::placeholder{color:var(--text-dim);opacity:.7}
+
+  /* stars */
+  .stars{display:flex;gap:4px}
+  .stars button{background:none;border:none;padding:4px;cursor:pointer;color:var(--border);
+    transition:color .1s ease;line-height:0}
+  .stars button svg{width:30px;height:30px}
+  .stars button.on,.stars button.hover{color:var(--yellow)}
+
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-dim);
+    background:var(--surface-2);border:1px solid var(--border);border-radius:11px;padding:12px 13px}
+  .consent input{margin-top:2px;flex:0 0 auto;width:16px;height:16px;accent-color:var(--steel)}
+
+  button.submit{font-family:"Oswald",sans-serif;font-weight:600;text-transform:uppercase;
+    letter-spacing:.04em;font-size:16px;color:var(--ink-900);background:var(--yellow);
+    border:none;border-radius:12px;padding:15px;cursor:pointer;box-shadow:var(--shadow);
+    transition:transform .14s ease,filter .14s ease}
+  button.submit:hover{transform:translateY(-2px);filter:brightness(.97)}
+  button.submit:active{transform:translateY(0)}
+  button.submit:disabled{opacity:.6;cursor:default;transform:none}
+
+  .note{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--text-dim);
+    text-align:center;letter-spacing:.03em;line-height:1.6;margin-top:4px}
+
+  /* success */
+  .done{display:none;text-align:center;padding:40px 10px}
+  .done.show{display:block}
+  .done .ok{width:64px;height:64px;border-radius:50%;background:var(--certified);
+    color:#fff;display:grid;place-items:center;margin:0 auto 18px}
+  .done h2{font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.02em;margin:0 0 8px}
+  .done p{color:var(--text-dim);margin:0 0 22px}
+  .done a{display:inline-block;font-family:"Oswald",sans-serif;text-transform:uppercase;
+    letter-spacing:.04em;text-decoration:none;color:var(--text);
+    border:1px solid var(--border);border-radius:11px;padding:12px 20px}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="index.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg> Назад</a>
+
+  <div id="formView">
+    <h1>Ваш <b>відгук</b></h1>
+    <p class="sub">Розкажіть про досвід із укриттям Hobbit House. Ваші слова допомагають іншим керівникам прийняти зважене рішення.</p>
+
+    <!-- Відправка через пошту отримувача (mailto): відкриває поштову програму з готовим листом. -->
+    <form id="reviewForm" data-to="marketing@hobbithouse.com.ua">
+      <div class="field">
+        <label for="name">Ім'я <span class="req">*</span></label>
+        <input type="text" id="name" name="Ім'я" placeholder="Як до вас звертатися" required>
+      </div>
+
+      <div class="field">
+        <label>Загальна оцінка</label>
+        <div class="stars" data-target="rating" role="radiogroup" aria-label="Загальна оцінка від 1 до 5">
+          <button type="button" data-v="1" aria-label="1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="2" aria-label="2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="3" aria-label="3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="4" aria-label="4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="5" aria-label="5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+        </div>
+        <input type="hidden" name="Загальна оцінка" id="rating" value="">
+      </div>
+
+      <div class="field">
+        <label>Стан укриття</label>
+        <div class="stars" data-target="condition" role="radiogroup" aria-label="Стан укриття від 1 до 5">
+          <button type="button" data-v="1" aria-label="1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="2" aria-label="2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="3" aria-label="3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="4" aria-label="4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+          <button type="button" data-v="5" aria-label="5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
+        </div>
+        <input type="hidden" name="Стан укриття" id="condition" value="">
+      </div>
+
+      <div class="field">
+        <label for="text">Що саме сподобалось? <span class="req">*</span></label>
+        <textarea id="text" name="Відгук" placeholder="Що саме сподобалось? Яку задачу вирішили? Що скажете іншим керівникам?" required></textarea>
+      </div>
+
+      <div class="field">
+        <label for="contact">Контакт для зв'язку (email або телефон)</label>
+        <input type="text" id="contact" name="Контакт" placeholder="Необов'язково — якщо дозволяєте уточнити деталі">
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" name="Згода на публікацію" value="так" checked>
+        <span>Дозволяю опублікувати мій відгук (із зазначенням імені) на ресурсах Hobbit House.</span>
+      </label>
+
+      <button type="submit" class="submit" id="submitBtn">Надіслати відгук</button>
+      <p class="note">Після натискання відкриється ваша пошта з готовим листом. Ваша безпека — це наша робота.</p>
+    </form>
+  </div>
+
+  <div class="done" id="doneView">
+    <div class="ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+    <h2>Майже готово</h2>
+    <p>Відкрилася ваша поштова програма з готовим листом — лишилось натиснути «Відправити». Дякуємо, що ділитесь досвідом.</p>
+    <a href="index.html">На головну</a>
+  </div>
+</main>
+
+<!-- TODO: GA4 ID (той самий, що в index.html) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+  gtag('js',new Date());gtag('config','G-XXXXXXXXXX');
+
+  // Зірки — для кожної групи [data-target]
+  var values={};
+  document.querySelectorAll('.stars').forEach(function(group){
+    var target=group.dataset.target, input=document.getElementById(target);
+    var btns=Array.from(group.querySelectorAll('button'));
+    values[target]=0;
+    function paint(n){btns.forEach(function(b){b.classList.toggle('on',+b.dataset.v<=n);});}
+    btns.forEach(function(b){
+      b.addEventListener('mouseenter',function(){btns.forEach(function(x){x.classList.toggle('hover',+x.dataset.v<=+b.dataset.v);});});
+      b.addEventListener('mouseleave',function(){btns.forEach(function(x){x.classList.remove('hover');});});
+      b.addEventListener('click',function(){values[target]=+b.dataset.v;input.value=values[target];paint(values[target]);});
+    });
+  });
+
+  // Відправка через mailto — відкриває поштову програму з готовим листом
+  var form=document.getElementById('reviewForm');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!form.checkValidity()){form.reportValidity();return;}
+
+    var to=form.dataset.to;
+    var name=(document.getElementById('name').value||'').trim();
+    var rating=values.rating?values.rating+'/5':'—';
+    var condition=values.condition?values.condition+'/5':'—';
+    var text=(document.getElementById('text').value||'').trim();
+    var contact=(document.getElementById('contact').value||'').trim();
+    var consent=form.querySelector('input[name="Згода на публікацію"]').checked?'так':'ні';
+
+    var subject='Відгук про укриття Hobbit House — '+(name||'без імені');
+    var body=[
+      'Ім\'я: '+(name||'—'),
+      'Загальна оцінка: '+rating,
+      'Стан укриття: '+condition,
+      '',
+      'Що саме сподобалось:',
+      text||'—',
+      '',
+      'Контакт: '+(contact||'—'),
+      'Згода на публікацію: '+consent
+    ].join('\n');
+
+    try{gtag('event','review_submit',{rating:values.rating||null,condition:values.condition||null,page:'reviews'});}catch(err){}
+
+    window.location.href='mailto:'+to+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+
+    document.getElementById('formView').style.display='none';
+    document.getElementById('doneView').classList.add('show');
+  });
+</script>
+</body>
+</html>
