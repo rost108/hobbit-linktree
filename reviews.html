@@ -102,11 +102,13 @@
     <h1>Ваш <b>відгук</b></h1>
     <p class="sub">Розкажіть про досвід із укриттям Hobbit House. Ваші слова допомагають іншим керівникам прийняти зважене рішення.</p>
 
-    <!-- Відправка через пошту отримувача (mailto): відкриває поштову програму з готовим листом. -->
-    <form id="reviewForm" data-to="marketing@hobbithouse.com.ua">
+    <!-- Netlify Forms: сповіщення про нові відгуки — на hobbithousemarketing@gmail.com (налаштовано в Netlify) -->
+    <form id="reviewForm" name="reviews" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="reviews">
+      <p hidden><label>Не заповнюйте: <input name="bot-field"></label></p>
       <div class="field">
         <label for="name">Ім'я <span class="req">*</span></label>
-        <input type="text" id="name" name="Ім'я" required>
+        <input type="text" id="name" name="name" required>
       </div>
 
       <div class="field">
@@ -118,7 +120,7 @@
           <button type="button" data-v="4" aria-label="4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
           <button type="button" data-v="5" aria-label="5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
         </div>
-        <input type="hidden" name="Загальна оцінка" id="rating" value="">
+        <input type="hidden" name="rating" id="rating" value="">
       </div>
 
       <div class="field">
@@ -130,33 +132,33 @@
           <button type="button" data-v="4" aria-label="4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
           <button type="button" data-v="5" aria-label="5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 18l-6.1 3.4 1.4-6.8L2.2 9.1l6.9-.8z"/></svg></button>
         </div>
-        <input type="hidden" name="Стан укриття" id="condition" value="">
+        <input type="hidden" name="condition" id="condition" value="">
       </div>
 
       <div class="field">
         <label for="text">Що саме сподобалось? <span class="req">*</span></label>
-        <textarea id="text" name="Відгук" required></textarea>
+        <textarea id="text" name="review" required></textarea>
       </div>
 
       <div class="field">
         <label for="contact">Контакт для зв'язку (email або телефон)</label>
-        <input type="text" id="contact" name="Контакт">
+        <input type="text" id="contact" name="contact">
       </div>
 
       <label class="consent">
-        <input type="checkbox" name="Згода на публікацію" value="так" checked>
+        <input type="checkbox" name="consent" value="так" checked>
         <span>Дозволяю опублікувати мій відгук (із зазначенням імені) на ресурсах Hobbit House.</span>
       </label>
 
       <button type="submit" class="submit" id="submitBtn">Надіслати відгук</button>
-      <p class="note">Після натискання відкриється ваша пошта з готовим листом. Ваша безпека — це наша робота.</p>
+      <p class="note">Ваша безпека — це наша робота.</p>
     </form>
   </div>
 
   <div class="done" id="doneView">
     <div class="ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
-    <h2>Майже готово</h2>
-    <p>Відкрилася ваша поштова програма з готовим листом — лишилось натиснути «Відправити». Дякуємо, що ділитесь досвідом.</p>
+    <h2>Дякуємо!</h2>
+    <p>Ваш відгук надіслано. Ми цінуємо, що ви знайшли час поділитися досвідом.</p>
     <a href="index.html">На головну</a>
   </div>
 </main>
@@ -181,39 +183,26 @@
     });
   });
 
-  // Відправка через mailto — відкриває поштову програму з готовим листом
+  // Відправка в Netlify Forms (відгуки видно у вкладці Forms проєкту hobbit-house)
   var form=document.getElementById('reviewForm');
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(!form.checkValidity()){form.reportValidity();return;}
-
-    var to=form.dataset.to;
-    var name=(document.getElementById('name').value||'').trim();
-    var rating=values.rating?values.rating+'/5':'—';
-    var condition=values.condition?values.condition+'/5':'—';
-    var text=(document.getElementById('text').value||'').trim();
-    var contact=(document.getElementById('contact').value||'').trim();
-    var consent=form.querySelector('input[name="Згода на публікацію"]').checked?'так':'ні';
-
-    var subject='Відгук про укриття Hobbit House — '+(name||'без імені');
-    var body=[
-      'Ім\'я: '+(name||'—'),
-      'Загальна оцінка: '+rating,
-      'Стан укриття: '+condition,
-      '',
-      'Що саме сподобалось:',
-      text||'—',
-      '',
-      'Контакт: '+(contact||'—'),
-      'Згода на публікацію: '+consent
-    ].join('\n');
-
+    var btn=document.getElementById('submitBtn');
+    btn.disabled=true;btn.textContent='Надсилаємо…';
+    var data=new FormData(form);
+    data.set('consent',form.querySelector('input[name="consent"]').checked?'так':'ні');
     try{gtag('event','review_submit',{rating:values.rating||null,condition:values.condition||null,page:'reviews'});}catch(err){}
-
-    window.location.href='mailto:'+to+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-
-    document.getElementById('formView').style.display='none';
-    document.getElementById('doneView').classList.add('show');
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()})
+      .then(function(r){
+        if(!r.ok) throw new Error(r.status);
+        document.getElementById('formView').style.display='none';
+        document.getElementById('doneView').classList.add('show');
+      })
+      .catch(function(){
+        btn.disabled=false;btn.textContent='Надіслати відгук';
+        alert('Не вдалося надіслати. Перевірте інтернет і спробуйте ще раз.');
+      });
   });
 </script>
 </body>
